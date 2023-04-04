@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import Card from './Card'
 
 const Products = () => {
   const [products, setProducts] = useState([])
@@ -8,11 +9,11 @@ const Products = () => {
     .then(data=>setProducts(data.data))
   },[])
   return (
-    <div className='container mx-auto px-4 max-w-7xl'>
-      <h1 className='text-4xl text-center'>Our Products</h1>
-      <div>
+    <div className='container mx-auto px-4 max-w-6xl'>
+      <h1 className='text-4xl text-center mb-4'>Our Products</h1>
+      <div className='flex flex-wrap align-middle justify-center lg:justify-start  content-center'>
       {
-        products?.map(product=>(<p key={product._id}>{product.name}</p>))
+        products?.map(product=>(<Card key={product._id} product={product}/>))
       }
       </div>
     </div>
