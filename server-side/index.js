@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const { MongoClient} = require('mongodb');
-const ObjectId = require('mongodb').ObjectId
+var ObjectId = require('mongodb').ObjectId
 const app = express()
 const port = process.env.PORT || 5000
 
@@ -25,11 +25,16 @@ async function run(){
     })
 
     app.get('/api/products/:id', async(req, res) =>{
-      const id = req.params.id
+      try{
+        const id = req.params.id
       // console.log(id);
-      const query = {_id:new ObjectId(id)}
-      const result = await productsCollection.findOne(query)
-      res.send(result)
+        const query = {_id:new ObjectId(id)}
+        const result = await productsCollection.findOne(query)
+        res.send(result)
+      }
+      catch(err){
+        console.log(err);
+      }
     })
   }
   finally{
