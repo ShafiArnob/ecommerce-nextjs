@@ -4,6 +4,8 @@ import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import Hero from '@/components/Home/Hero'
 import Products from '@/components/Home/Products'
+import Sidebar from '@/components/Sidebar'
+import { createContext, useState } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,8 +19,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Hero/>
-        <Products/>
+          <Hero/>
+          <Products/>
       </main>
     </>
   )

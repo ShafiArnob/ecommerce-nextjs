@@ -2,7 +2,8 @@ import axios from 'axios'
 import Image from 'next/image'
 import { FiPlus,FiMinus } from 'react-icons/fi'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { CART_CONTEXT } from '../_app'
 
 const Product = () => {
   const router = useRouter()
@@ -10,6 +11,9 @@ const Product = () => {
 
   const [product, setProduct] = useState({})
   const [quantity, setQuantity] = useState(1)
+
+  const {cart,setCart} = useContext(CART_CONTEXT)
+
   useEffect(()=>{
     if(pid!==undefined){
       axios.get(`http://localhost:5000/api/products/${pid}`)
@@ -17,6 +21,11 @@ const Product = () => {
       .catch(err=>console.log(err))
     }
   },[pid])
+
+  const addToCart = (product) => {
+    const tempProduct = {quantity:quantity, ...product}
+    setCart([tempProduct, ...cart])
+  }
   return (
     <div >
       <div className='flex flex-col items-center m-6 p-2 mx-auto bg-purple-100 rounded-xl max-w-5xl md:p-4 md:flex-row lg:w-10/12'>
@@ -36,7 +45,7 @@ const Product = () => {
             <input min={1} id='quantity' type="number" onChange={(e)=>setQuantity(parseInt(e.target.value))} className='block p-1 w-24' placeholder='quantity' value={quantity}/>
             <button className='bg-gray-300 p-2 m-0.5' onClick={()=>setQuantity(quantity+1)}><FiPlus/></button>
           </div>
-          <button className='bg-black text-white font-bold px-4 py-3 outline-2 outline outline-black hover:bg-green-50 hover:text-black block'>Add to Cart</button>
+          <button className='bg-black text-white font-bold px-4 py-3 outline-2 outline outline-black hover:bg-green-50 hover:text-black block'  onClick={()=>addToCart(product)}>Add to Cart</button>
         </div>
      
       </div>
